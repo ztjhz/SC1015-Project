@@ -1,0 +1,18 @@
+https://myanimelist.net/apiconfig/references/api/v2
+
+- seasonal anime api [2000-2021]
+
+- anime ranking api 
+  - all
+  - airing
+  - tv
+  - ova
+  - movie
+  - special
+  - bypopularity
+  - favorite
+
+- get anime list [query] [top 100 from to a-z]
+
+
+- anime details api [with features]
