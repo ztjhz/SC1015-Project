@@ -1,6 +1,6 @@
 https://myanimelist.net/apiconfig/references/api/v2
 
-- seasonal anime api 
+- seasonal anime api [2000-2021]
 
 - anime ranking api 
   - all
