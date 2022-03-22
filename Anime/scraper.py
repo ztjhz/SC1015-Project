@@ -1,6 +1,6 @@
 # scrap https://myanimelist.net/users.php for usernames
 
-import os # for file and directory
+import os  # for file and directory
 import requests
 from bs4 import BeautifulSoup  # parse html
 
@@ -56,3 +56,19 @@ with open(USERNAME_FILENAME, 'a') as f:
     for username in usernames:
         f.write(username + "\n")
     print(f"{len(usernames)} usernames saved")
+
+unique_usernames = None
+# remove duplicate usernames if any
+with open(USERNAME_FILENAME, 'r') as f:
+    content = f.read()
+    unique_usernames = set(content.split('\n'))
+    try:
+        # remove empty usernames
+        unique_usernames.remove('')
+    except KeyError:
+        pass
+    print("Number of unique usernames:", len(unique_usernames))
+
+with open(USERNAME_FILENAME, 'w') as f:
+    for username in unique_usernames:
+        f.write(f"{username}\n")
