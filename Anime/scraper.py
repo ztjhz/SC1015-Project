@@ -8,11 +8,10 @@ URL = "https://myanimelist.net/users.php"
 """ 
     The page we are scraping only contains 20 users at a time.
     So, we need to scrap the website every second to get new users.
-    We will need around 10,000 usernames (10,000 users / 20 users per second = 500 seconds)
     We will save the usernames that we have scrapped in a text file.
 """
 USER_PER_PAGE = 20
-USERNAME_NEEDED = 10000
+USERNAME_NEEDED = 20000
 USERNAME_FILENAME = "usernames.txt"
 current_usernames_count = 0
 
