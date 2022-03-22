@@ -23,7 +23,7 @@ if not os.path.exists(USERNAME_FILENAME):
 # get the length of the current usernames that we have collected in the past
 with open(USERNAME_FILENAME, 'r') as f:
     content = f.read()
-    current_usernames_count = len(content.split('\n'))
+    current_usernames_count = len(content.split('\n')) - 1
 
 print(f"Current number of usernames = {current_usernames_count}")
 
