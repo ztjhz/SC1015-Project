@@ -12,7 +12,7 @@ URL = "https://myanimelist.net/users.php"
 """
 USER_PER_PAGE = 20
 USERNAME_NEEDED = 20000
-USERNAME_FILENAME = "usernames.txt"
+USERNAME_FILENAME = "MAL_info/usernames.txt"
 current_usernames_count = 0
 
 if not os.path.exists(USERNAME_FILENAME):
