@@ -1,146 +1,150 @@
-# Project AniFame
-The cost of producing an anime is very high, so it is important to know whether the anime that a studio is producing will be profitable, hence allowing studios to maximise their profits and ensure their survivability in the industry.
+# SC1015 DSAI Project: AniFame
 
-This project aims to maximize studios’ profits on anime they produce. We use MyAnimeList API to scrap anime from 2000 to 2021, clean and process it for Exploratory Data Analysis and Machine Learning.
+**Our Motivation:**
+- Animes are outlets of relaxation and escape for people of all ages. However, while anime viewers love watching anime, studios are experiencing difficulties in making profits for many of the anime they produced due to **high costs.**
+- According to Eric (2015), an average 13-episode anime season costs around $2 million USD, and many animes cannot recoup this expense. In order to make it sell, anime advertisements, events and merchandise are essential to studios’ profit margin. All this depends on the popularity of the anime with anime viewers. 
+- Hence, it is important to know whether the anime that a studio is producing will be profitable, hence allowing studios to **maximise their profits** and ensure their survivability in the industry.
 
-## 1. Data Collection
-Dataset used:
-- Animes from 2000 to 2021 scraped from MyAnimeList.net [API](https://myanimelist.net/apiconfig/references/api/v2)
+![MAL](https://user-images.githubusercontent.com/47933193/164981422-834ebc32-3be4-430e-b69e-c38dcf065d3e.png)
 
-## 2. Data Cleaning
-#### Missing Values
-Fill the NaN entries with domain specific knowledge
+## Project Goal:
+- This project aims to **maximize studios’ profits** on animes they produce by estimating 'mean' rating of animes and predicting 'success' probability before production, hence giving studios the ability to **fine-tune** the animes before production.
 
-#### Json Manipulation
-Convert features into Json format for manipulation and feature generation
+## Dataset Used:
+We used MyAnimeList [API](https://myanimelist.net/apiconfig/references/api/v2) to scrap anime from 2000 to 2021, cleaned and processed it for Exploratory Data Analysis and Machine Learning.
+- [DataSet Folder](https://github.com/ztjhz/SC1015-Project/tree/main/Anime/dataset)
 
-#### Feature Engineering
-1. Aggregate individual individual viewing statistics into `positive_viewership_fraction` and `negative_viewership_fraction`
-    - `positive_viewership_fraction` = (`statistics_watching` + `statistics_completed` + `statistics_plan_to_watch`) / `total_views`
-    - `negative_viewership_fraction` = (`statistics_on_hold` + `statistics_dropped`) / `total_views`
-2. Create feature `success`, for animes with:
-    - `rank` <= 500
-    - `popularity` <= 500
-    - `mean` >=8.5
-    - `positive_viewership_fraction` >= 0.975
+**Note:** Some datasets are scraped but are not included in the final project (e.g. the various ranking datasets)
 
-#### Time Series
-Create `genres` time-series since `genres` are obvious differences between animes
+## Jupyter Notebooks:
+- [Data Collection](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/data_collection_(scraping).ipynb)
+- [Data Cleaning and Preprocessing](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/data_cleaning_preprocessing.ipynb)
+- [Exploratory Data Analysis & Visualization](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/exploratory_data_analysis_visualization.ipynb)
+- [Linear Regression](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/linear_regression.ipynb)
+- [Classification](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/classification.ipynb)
 
-#### One-hot Encoding
-One-hot encoding of categorical features for building machine learning models
+**Note:** Some Jupyter Notebooks are used but are not included in the final project (e.g. anomaly detection, helpers, scraper)
 
-## 3. Exploratory Data Analysis & Visualization
-### Genres Count
-Frequency of occurance of all the genres of animes from 2000 to 2021
+<br>
 
-<img src="https://user-images.githubusercontent.com/100555522/164972748-2bc029ca-4ffe-4422-92b1-728ef5d3288f.png" width="800" height="800">
+---
 
-- 'Comedy' genre has the most animes
-- Top 5 genres from 2000 to 2021 are `Comedy`, `Action`, `Fantasy`, `Adventure`, and `Shounen`
+# Overview of DataScience Pipeline:
+### [1. Data collection:](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/data_collection_(scraping).ipynb)
+- Used [MAL API](https://myanimelist.net/apiconfig/references/api/v2) to recursively scrap thousands of anime data from 2000 to 2021
 
-### Award Winning vs No Genre
-Compairing `award_winning` genre and `no_genre` animes
+### [2. Data cleaning and preprocessing:](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/data_cleaning_preprocessing.ipynb)
+- Removing useless features, handling missing values
+- Json conversion and manipulation
+- Feature engineering and generation
+- Creating 'genres' time series data
+- Export data as csv
+- [One-hot Encoding](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/linear_regression.ipynb)
 
-![download](https://user-images.githubusercontent.com/100555522/164973052-aa1ea8f4-6991-49b9-b794-4f10d4b7d62e.png)
-![download](https://user-images.githubusercontent.com/100555522/164973439-1ad3eeac-e629-4d99-8c33-7d0ef73c1b37.png)
+### [3. EDA & Visualization:](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/exploratory_data_analysis_visualization.ipynb)
 
-- `Award_winning` animes on generally have higher popularity, have better rankings, and are rated higher for all the animes than that of `no_genre` animes
-- What differentiate these 2 categories is that Award Winning animes are more popular and higher ranked such that `Award_Winning` animes have genres associated with them whereas `no_genre` animes do not
+Explored, visualized, and generated insights for the following:
+- 'genres' + 'genres' time series
+- 'studios'
+- 'mean' rating vs 'source', 'media_type', 'nsfw', 'rating', 'genre', and 'studios'
+- Relationship between 'mean', 'rank', 'popularity', 'positive_viewership_fraction', and 'negative_viewership_fraction'
+- num_episodes' and 'average_episode_duration' overview trend
+- 'start_season_season'
 
-- Comparing average number of viewers:
-    - 'no_genre':      	 2920.625
-    - 'Award Winning': 	 552745.0
-    - 'Award Winning' has 18925.57% more views than 'no_genre'
-
-- Comparing percentage of positive viewship:
-    - 'no_genre':      	 2786.88
-    - 'Award Winning': 	 550592.33
-    - 'Award Winning' has 19756.59% more positive views than 'no_genre'
+### [4. Regression:](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/linear_regression.ipynb) <br>
+`Models:`
+- Linear Regression
+- Lasso Regression
+- Ridge Regression **(Best)**
  
-- Comparing percentage of negative viewship:
-    - 'no_genre':      	 133.75
-    - 'Award Winning': 	 2152.67
-    - 'Award Winning' has 1609.47% more negative views than 'no_genre'
- 
-- More people watch Award Winning animes and have positive experience with them compared to no_genre animes since the retention is greater for Award Winning animes
+`Metrics:`
+- Explained Variance (R^2)
+- Mean Squared Error, Root Mean Squared Error
 
-### Genres Trends
-`Genre` trends by anime counts from 1999 to 2021
 
-<img src="https://user-images.githubusercontent.com/100555522/164975183-962cb2a5-7311-4a56-9cc2-fe5330354c20.png" width="800" height="800">
+### [5. Classification:](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/classification.ipynb) <br>
+`Models:`
+- LinearSVC
+- Decision Tree
+- Random Forest **(Best - 4th version)** 
 
-- Decreasing genre trends: 
-    - Shounen, Comedy, Kids, Mecha, Sci-Fi, Adventure
-- Increasing genre trends:
-    - Slice of Life, Music
- 
-### Studio Analysis
-Anime `studio` counts from 2000 to 2021
+`Metrics:`
+- TPR, TNR, Confusion Matrix
+- Precision, Recall (TPR), F-score
+- Out-of-bag score
+- ROC AUC score
+- K-fold cross validation standard deviation
 
-![download](https://user-images.githubusercontent.com/100555522/164975540-bf621492-d04a-4add-a9ab-21fd19542031.png)
 
-- Top 5 anime studios:
-    - Toei Animation, Sunrise, TMS Entertainment, Madhouse, OLM
+### 6. Key Insights & Recommendations:
 
-### Mean Rating Analysis
-Number of positive user scoring of anime without ratings vs anime with ratings
+Studios should:
+- Focus on **quality over quantity** of animes
+- Broadcast animes **regardless of season**
+- **Not** focus on producing animes that generate more positive views through fan-service
+- Produce **anime movie franchises**
 
-![download](https://user-images.githubusercontent.com/100555522/164976060-ccbb9f10-1b4e-4092-9de8-a31d0937d1de.png)
+**Important features** that determine the success of an anime:
+  - ‘average_episode_duration’
+  - ‘num_episodes’
+  - ‘source_manga’
+  - ‘media_type_movie’
+  - ‘rating_pg_13’
 
-- Animes without mean ratings are those that have low `num_scoring_users`, which means that there are not enough users watching and rating these animes for it to have a reliable `mean` rating
+<br>
 
-### Source vs Mean Rating
-`Sources` of anime vs `mean` ratings of anime
+---
 
-<img src="https://user-images.githubusercontent.com/100555522/164976211-ec360780-87dd-4185-8c84-90b6e00b621f.png" width="800" height="500">
-<img src="https://user-images.githubusercontent.com/100555522/164976285-c5698c46-ae9b-485e-b8a1-cfffbde1f74f.png" width="800" height="500">
+# What we learnt from this project:
+**Data collection:**
+- Scraping data using API calls
 
-- `Web Novels` is a anime source that is very popular among viewers as these animes have a mean rating of 8.4, which is significantly more than that of other sources
-- The top 5 anime sources are `web_novel`, `manga`, `light_novel`, `novel`, and `web_manga`
+**Data cleaning and preprocessing:**
+- Feature Engineering & Feature generation
+- JSON manipulation techniques
+- Generating time-series data 
 
-### Media Type vs Mean Rating
-`Media type` of anime vs `mean` rating of anime
+**EDA & Visualization:**
+- Visualization plots with large number of datapoints
+  - By reducing the data point size,
+  - By reducing the opacity of data points, or
+  - By introducing random sampling
+- ‘genres’ time-series EDA
 
-<img src="https://user-images.githubusercontent.com/100555522/164976426-a6798473-6597-47e3-8f85-9c86ab26dfe8.png" width="800" height="500">
-<img src="https://user-images.githubusercontent.com/100555522/164976464-6556191d-c19c-47e4-b968-ef15e2f9792b.png" width="800" height="500">
+**Machine Learning:**
+- Machine Learning Models:
+  - Ridge Regression, Lasso Regression, Random Forest, LinearSVC
+- Classification Performance Metrics:
+  - F-score (Precision & Recall), out-of-bag (obb) score, ROC AUC score
 
-- All media types generally have similar mean rating
-- Types `tv`, `movie`, and `ova` have slightly higher mean rating, while music have the lowest mean rating
+<br>
 
-### Mean Rating vs Rating
-`Rating` of anime vs `mean` rating of anime
+---
 
-<img src="https://user-images.githubusercontent.com/100555522/164976602-4b51d010-d723-442a-8c11-c3f7fdd035ef.png" width="800" height="500">
-<img src="https://user-images.githubusercontent.com/100555522/164976645-bd0865b7-12aa-4159-9112-3beb71f44f46.png" width="800" height="500">
+# Contributions:
+**Data Collection:** `Jing Qiang` and `Jing Hua` <br>
+**Data cleaning and preprocessing:** `Jing Qiang`, `Jing Hua`, and `YinFeng` <br>
+**EDA and visualization:** `Jing Qiang` and `Jing Hua` <br>
+**Regression:** `Jing Hua` <br>
+**Classification:** `Jing Qiang` <br>
+**Presentation Script:** `Jing Qiang` <br>
+**Presentation Voice Over + Editing:** `Jing Hua` <br>
+**Slides Deck:** `Jing Qiang`, `Jing Hua`, `YinFeng` <br>
+**GitHub ReadMe:** `Jing Qiang` <br>
 
-- The rating `r` has the highest mean rating while `no_rating` and `g` have the lowest mean rating
 
-### Genre vs Mean rating
-`Genre` of anime vs `mean` rating of anime
+Did but not included in the final product: <br>
+- **Ranking dataset EDA:** `YinFeng` <br>
+- **Anomaly Detection:** `Jing Qiang`, `YinFeng` <br>
 
-<img src="https://user-images.githubusercontent.com/100555522/164976708-afac5be8-6b9c-4f03-ad36-dd9582778bd4.png" width="800" height="500">
-<img src="https://user-images.githubusercontent.com/100555522/164976784-b7cce3cb-2964-4490-ac46-b3cce2345cb2.png" width="800" height="500">
 
-- The top 5 genres with the highest mean rating include `Award Winning`, `Suspense`, `Police`, `Super Power`, and `Samurai`
-- The bottom 5 genres with the lowest mean rating include `no_genre`, `Avant Garde`, `Kids`, `Music`, and `Cars`
-- `Kids` has the 3rd lowest mean rating which supports its decreasing trend in animes with 'Kids' genre produced yearly
+# References:
+- https://myanimelist.net/apiconfig/references/api/v2
+- https://www.animenewsnetwork.com/interest/2015-08-13/anime-insiders-share-how-much-producing-a-season-costs/.91536#:%7E:text=Like%20other%20entertainment%20ventures%2C%20any,yen%20(or%20%242%20million)
+- https://medium.com/@cheahwen1997/data-analysis-and-visualization-on-anime-using-pandas-and-matplotlib-1150d6605f5a
+- https://towardsdatascience.com/linear-regression-models-4a3d14b8d368
+- https://medium.datadriveninvestor.com/choosing-the-best-algorithm-for-your-classification-model-7c632c78f38f
+- https://builtin.com/data-science/random-forest-algorithm
+- https://www.kaggle.com/code/niklasdonges/end-to-end-project-with-python/notebook
+- https://quantdare.com/decision-trees-gini-vs-entropy/
 
-### Studios vs Mean rating
-`Studio` of anime vs `mean` rating of anime
-
-![download](https://user-images.githubusercontent.com/100555522/164976848-e67da9a0-ae0c-4bc0-b047-288ca9fb447f.png)
-
-- The studio that produced the highest mean rating is Studio Bind, followed by `Studio Signpost`, `Egg Firm`, `China Literature Limited`, and `CLAP`
-- It is surprising that the top 5 most common studios in from 2000 to 2021 are not in the top 20 studios that produce the highest mean rating
-
-### Relationship analysis
-Relationship between `mean`, `rank`, `popularity`, `positive_viewership_fraction`, and `negative_viewership_fraction`
-
-![download](https://user-images.githubusercontent.com/100555522/164976961-3b23df00-7711-4d21-8095-5482bf811bdd.png)
-![download](https://user-images.githubusercontent.com/100555522/164977027-d8680924-9fef-477c-ab73-542df5c116fd.png)
-
-- `mean` increases while `rank` decreases --> As rank improves, mean rating increases
-- `mean` increases while `popularity` decreases --> As popularity improves, mean rating increases
-- `rank` increases with `popularity` --> As rank worsens, popularity also worsens
-- There isn't much correction between `mean`, `rank`, and `popularity` with `negative_viewership_fraction` and `positive_viewership_fraction`
