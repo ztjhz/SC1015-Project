@@ -26,7 +26,7 @@ We used MyAnimeList [API](https://myanimelist.net/apiconfig/references/api/v2) t
 **Note:** Some Jupyter Notebooks are used but are not included in the final project (e.g. anomaly detection, helpers, scraper)
 
 ## Slide Deck:
-- [Presentation Slides](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/slide_deck.pdf)
+- [Presentation Slides](https://github.com/ztjhz/SC1015-Project/blob/main/Anime/slides_deck.pdf)
 
 <br>
 
